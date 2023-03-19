@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Classes.GOT;
+package Classes.TLOU;
 
-import static Classes.GOT.MainGOT.IdCounter;
-import Classes.Queue;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,58 +16,42 @@ import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author emilo
+ * @author Nicolás Briceño
  */
-public class ManagerGOT extends Thread{
+public class ManagerTLOU extends Thread{
     // Hacemos las 3 colas
-    public static Queue<EpisodeGOT> firstQueue;
-    public static Queue<EpisodeGOT> secondQueue;
-    public static Queue<EpisodeGOT> thirdQueue;
-    public static Queue<EpisodeGOT> strengthQueue;
+    public static QueueTLOU firstQueue;
+    public static QueueTLOU secondQueue;
+    public static QueueTLOU thirdQueue;
+    public static QueueTLOU backupQueue;
     public static int idCounter;
     private boolean stop;
 
-    public ManagerGOT(Queue<EpisodeGOT> firstQueue, Queue<EpisodeGOT> secondQueue, Queue<EpisodeGOT> thirdQueue, Queue<EpisodeGOT> strengthQueue) throws ParseException {
-        this.firstQueue = firstQueue;
-        this.secondQueue = secondQueue;
-        this.thirdQueue = thirdQueue;
-        this.strengthQueue = strengthQueue;
+    public ManagerTLOU() throws ParseException {
+        ManagerTLOU.firstQueue = new QueueTLOU();
+        ManagerTLOU.secondQueue = new QueueTLOU();
+        ManagerTLOU.thirdQueue = new QueueTLOU();
+        ManagerTLOU.backupQueue = new QueueTLOU();
         readJson();
     }
     
     @Override
     public void run() {
         while (!stop) {
-            
-        }
-    }
-    
-    public static void ProduceEpisode(Queue queue) {
-        idCounter++;
-        EpisodeGOT episode = new EpisodeGOT(idCounter, 0);
-        queue.enqueue(episode);
-        writeJson();
-        
-    }
-    
-    public static EpisodeGOT[] GetNodes(Queue<EpisodeGOT> queue, int amount) {
-        int max = 0;
-        EpisodeGOT[] arr = new EpisodeGOT[amount];
-        for (int i = 0; i < queue.getSize(); i++) {
-            if (max == amount) {
-                EpisodeGOT aux = queue.dequeue();
-                queue.enqueue(aux);
-            } 
-            else {
-                 arr[i] = queue.dequeue();
-                 queue.enqueue(arr[i]);
-                 max++;
+            idCounter++;
+            EpisodeTLOU episode = new EpisodeTLOU(idCounter, 0);
+            if (episode.getDuration() <= 59) {
+                thirdQueue.Enqueue(idCounter, 0);
+            } else if (episode.getDuration() >= 60 && episode.getDuration() <= 90) {
+                secondQueue.Enqueue(idCounter, 0);
+            } else if (episode.getDuration() > 90) {
+                firstQueue.Enqueue(idCounter, 0);
             }
+            writeJson();
         }
-        return arr;
-    } 
+    }
     
-    public  void readJson() throws ParseException {
+    public static void readJson() throws ParseException {
 
         JSONParser parser = new JSONParser();
 

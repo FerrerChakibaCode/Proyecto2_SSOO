@@ -5,19 +5,27 @@
  */
 package Interfaces;
 
-import Classes.GOT.EpisodeGOT;
-import Classes.GOT.MainGOT;
+import Classes.TLOU.EpisodeTLOU;
+import Classes.TLOU.ManagerTLOU;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.parser.ParseException;
 
 /**
  *
  * @author emilo
  */
-public class main extends javax.swing.JFrame {
-    MainGOT GOTInstance = new MainGOT();
+public class mainAI extends javax.swing.JFrame {
+    ManagerTLOU TLOUInstance;
     /**
      * Creates new form main
      */
-    public main() {
+    public mainAI() {
+        try {
+            this.TLOUInstance = new ManagerTLOU();
+        } catch (ParseException ex) {
+            Logger.getLogger(mainAI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
         
@@ -61,7 +69,7 @@ public class main extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
-        jLabel1.setText("The last of us");
+        jLabel1.setText("The Last Of Us");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, 220, -1));
 
         jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
@@ -184,20 +192,21 @@ public class main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(mainAI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(mainAI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(mainAI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(mainAI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new main().setVisible(true);
+                new mainAI().setVisible(true);
             }
         });
     }
