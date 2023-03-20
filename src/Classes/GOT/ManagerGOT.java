@@ -6,11 +6,12 @@
 package Classes.GOT;
 
 import static Classes.GOT.MainGOT.IdCounter;
-import Classes.Queue;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,15 +22,15 @@ import org.json.simple.parser.ParseException;
  * @author emilo
  */
 public class ManagerGOT extends Thread{
-    // Hacemos las 3 colas
-    public static Queue<EpisodeGOT> firstQueue;
-    public static Queue<EpisodeGOT> secondQueue;
-    public static Queue<EpisodeGOT> thirdQueue;
-    public static Queue<EpisodeGOT> strengthQueue;
+    // Hacemos las 4 colas
+    public static QueueGOT firstQueue;
+    public static QueueGOT secondQueue;
+    public static QueueGOT thirdQueue;
+    public static QueueGOT  strengthQueue;
     public static int idCounter;
     private boolean stop;
 
-    public ManagerGOT(Queue<EpisodeGOT> firstQueue, Queue<EpisodeGOT> secondQueue, Queue<EpisodeGOT> thirdQueue, Queue<EpisodeGOT> strengthQueue) throws ParseException {
+    public ManagerGOT(QueueGOT firstQueue, QueueGOT secondQueue, QueueGOT thirdQueue, QueueGOT strengthQueue) throws ParseException {
         this.firstQueue = firstQueue;
         this.secondQueue = secondQueue;
         this.thirdQueue = thirdQueue;
@@ -40,34 +41,49 @@ public class ManagerGOT extends Thread{
     @Override
     public void run() {
         while (!stop) {
-            
-        }
-    }
-    
-    public static void ProduceEpisode(Queue queue) {
-        idCounter++;
-        EpisodeGOT episode = new EpisodeGOT(idCounter, 0);
-        queue.enqueue(episode);
-        writeJson();
-        
-    }
-    
-    public static EpisodeGOT[] GetNodes(Queue<EpisodeGOT> queue, int amount) {
-        int max = 0;
-        EpisodeGOT[] arr = new EpisodeGOT[amount];
-        for (int i = 0; i < queue.getSize(); i++) {
-            if (max == amount) {
-                EpisodeGOT aux = queue.dequeue();
-                queue.enqueue(aux);
-            } 
-            else {
-                 arr[i] = queue.dequeue();
-                 queue.enqueue(arr[i]);
-                 max++;
+            try {
+                Thread.sleep(1000);
+                ProduceEpisode();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ManagerGOT.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return arr;
-    } 
+    }
+    
+    public static void ProduceEpisode() {
+        idCounter++;
+        EpisodeGOT episode = new EpisodeGOT(idCounter);
+        switch (episode.getPriority()) {
+            case 1:
+                firstQueue.enqueue(episode);
+                Interfaces.main.queue1GOT.setText(firstQueue.printQueue());
+                break;
+            case 2:
+                secondQueue.enqueue(episode);
+                Interfaces.main.queue2GOT.setText(secondQueue.printQueue());
+                break;
+            case 3:
+                thirdQueue.enqueue(episode);
+                Interfaces.main.queue3GOT.setText(thirdQueue.printQueue());
+                break;
+        }
+        writeJson();
+    }
+    
+    public void updateCounters(QueueGOT queue, QueueGOT nextQueue) {
+        for (int i = 0; i < queue.getSize(); i++) {
+            EpisodeGOT episodeAux = queue.dequeue(); // Asignamos el aux al primer elemento de la cola
+            episodeAux.setNext(null);
+            if (episodeAux.getCounter() >= 8) {
+                episodeAux.setCounter(0);
+                nextQueue.enqueue(episodeAux); // Sube la prioridad del elemento
+            } else {
+                episodeAux.setCounter(episodeAux.getCounter() + 1);
+                queue.enqueue(episodeAux);
+            }
+
+        }
+    }
     
     public  void readJson() throws ParseException {
 

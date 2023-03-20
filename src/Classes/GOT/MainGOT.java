@@ -5,7 +5,6 @@
  */
 package Classes.GOT;
 
-import Classes.Queue;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -22,13 +21,13 @@ import org.json.simple.parser.ParseException;
  */
 public class MainGOT {
 
-    public static EpisodeGOT firstEpisode = new EpisodeGOT(123123, 0);
+    public static EpisodeGOT firstEpisode = new EpisodeGOT(123123);
 
     // Hacemos las 3 colas
-    public static Queue<EpisodeGOT> firstQueue;
-    public static Queue<EpisodeGOT> secondQueue;
-    public static Queue<EpisodeGOT> thirdQueue;
-    public static Queue<EpisodeGOT> strengthQueue;
+    public static QueueGOT firstQueue;
+    public static QueueGOT secondQueue;
+    public static QueueGOT thirdQueue;
+    public static QueueGOT strengthQueue;
     public static Integer IdCounter;
 
     public MainGOT() {
@@ -38,22 +37,17 @@ public class MainGOT {
     }
 
     public void loadQueues() {
-        this.firstQueue = new Queue<EpisodeGOT>();
-        this.secondQueue = new Queue<EpisodeGOT>();
-        this.thirdQueue = new Queue<EpisodeGOT>();
-        this.strengthQueue = new Queue<EpisodeGOT>();
+        this.firstQueue = new QueueGOT(1);
+        this.secondQueue = new QueueGOT(2);
+        this.thirdQueue = new QueueGOT(3);
+        this.strengthQueue = new QueueGOT(0);
     }
 
     public void loadManager(Integer counter) {
         ManagerGOT manager;
         try {
             manager = new ManagerGOT(firstQueue, secondQueue, thirdQueue, strengthQueue);
-            manager.ProduceEpisode(firstQueue);
-            manager.ProduceEpisode(firstQueue);
-            manager.ProduceEpisode(firstQueue);
-            EpisodeGOT[] arrayQueue1 = manager.GetNodes(firstQueue, 5);
-            System.out.println(arrayQueue1[0].getId());
-            System.out.println(arrayQueue1[1].getId());
+            manager.start();
         } catch (ParseException ex) {
             Logger.getLogger(MainGOT.class.getName()).log(Level.SEVERE, null, ex);
         }

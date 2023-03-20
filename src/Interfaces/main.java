@@ -46,16 +46,14 @@ public class main extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        first2 = new javax.swing.JLabel();
-        first3 = new javax.swing.JLabel();
-        first4 = new javax.swing.JLabel();
-        first1 = new javax.swing.JLabel();
-        first5 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
+        queue1GOTPanel = new javax.swing.JScrollPane();
+        queue1GOT = new javax.swing.JTextArea();
+        queue2GOTPanel = new javax.swing.JScrollPane();
+        queue2GOT = new javax.swing.JTextArea();
+        queue3GOTPanel = new javax.swing.JScrollPane();
+        queue3GOT = new javax.swing.JTextArea();
+        queueStrengthGOTPanel = new javax.swing.JScrollPane();
+        queueStrengthGOT = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -70,7 +68,7 @@ public class main extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         jLabel4.setText("Game of Thrones");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 220, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 220, -1));
 
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel9.setText("Queue Refuerzo");
@@ -90,19 +88,19 @@ public class main extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel13.setText("Queue Refuerzo");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 220, -1));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 220, -1));
 
         jLabel14.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel14.setText("Queue prioridad 3");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 220, -1));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 220, -1));
 
         jLabel15.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel15.setText("Queue prioridad 2");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 220, -1));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 220, -1));
 
         jLabel16.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel16.setText("Queue prioridad 1");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 220, -1));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 220, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -114,55 +112,29 @@ public class main extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 290, 200));
 
-        first2.setBackground(new java.awt.Color(204, 255, 255));
-        first2.setForeground(new java.awt.Color(255, 51, 204));
-        first2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 40, 30));
+        queue1GOT.setColumns(20);
+        queue1GOT.setRows(5);
+        queue1GOTPanel.setViewportView(queue1GOT);
 
-        first3.setBackground(new java.awt.Color(204, 255, 255));
-        first3.setForeground(new java.awt.Color(255, 51, 204));
-        first3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 40, 30));
+        getContentPane().add(queue1GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
-        first4.setBackground(new java.awt.Color(204, 255, 255));
-        first4.setForeground(new java.awt.Color(255, 51, 204));
-        first4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 40, 30));
+        queue2GOT.setColumns(20);
+        queue2GOT.setRows(5);
+        queue2GOTPanel.setViewportView(queue2GOT);
 
-        first1.setBackground(new java.awt.Color(204, 255, 255));
-        first1.setForeground(new java.awt.Color(255, 51, 204));
-        first1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 200, 30));
+        getContentPane().add(queue2GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
 
-        first5.setBackground(new java.awt.Color(204, 255, 255));
-        first5.setForeground(new java.awt.Color(255, 51, 204));
-        first5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 40, 30));
+        queue3GOT.setColumns(20);
+        queue3GOT.setRows(5);
+        queue3GOTPanel.setViewportView(queue3GOT);
 
-        jLabel18.setBackground(new java.awt.Color(204, 255, 255));
-        jLabel18.setForeground(new java.awt.Color(255, 51, 204));
-        jLabel18.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 40, 30));
+        getContentPane().add(queue3GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, -1, -1));
 
-        jLabel19.setBackground(new java.awt.Color(204, 255, 255));
-        jLabel19.setForeground(new java.awt.Color(255, 51, 204));
-        jLabel19.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 40, 30));
+        queueStrengthGOT.setColumns(20);
+        queueStrengthGOT.setRows(5);
+        queueStrengthGOTPanel.setViewportView(queueStrengthGOT);
 
-        jLabel20.setBackground(new java.awt.Color(204, 255, 255));
-        jLabel20.setForeground(new java.awt.Color(255, 51, 204));
-        jLabel20.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 40, 30));
-
-        jLabel21.setBackground(new java.awt.Color(204, 255, 255));
-        jLabel21.setForeground(new java.awt.Color(255, 51, 204));
-        jLabel21.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 40, 30));
-
-        jLabel22.setBackground(new java.awt.Color(204, 255, 255));
-        jLabel22.setForeground(new java.awt.Color(255, 51, 204));
-        jLabel22.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 40, 30));
+        getContentPane().add(queueStrengthGOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -203,11 +175,6 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JLabel first1;
-    private javax.swing.JLabel first2;
-    private javax.swing.JLabel first3;
-    private javax.swing.JLabel first4;
-    private javax.swing.JLabel first5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -216,15 +183,18 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    public static javax.swing.JTextArea queue1GOT;
+    public static javax.swing.JScrollPane queue1GOTPanel;
+    public static javax.swing.JTextArea queue2GOT;
+    public static javax.swing.JScrollPane queue2GOTPanel;
+    public static javax.swing.JTextArea queue3GOT;
+    public static javax.swing.JScrollPane queue3GOTPanel;
+    public static javax.swing.JTextArea queueStrengthGOT;
+    public static javax.swing.JScrollPane queueStrengthGOTPanel;
     // End of variables declaration//GEN-END:variables
 }
