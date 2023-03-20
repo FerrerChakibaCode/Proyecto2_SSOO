@@ -6,12 +6,15 @@
 package Interfaces;
 
 <<<<<<< HEAD:src/Interfaces/mainAI.java
+<<<<<<< HEAD:src/Interfaces/mainAI.java
 import Classes.TLOU.EpisodeTLOU;
 import Classes.TLOU.ManagerTLOU;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
+=======
+>>>>>>> parent of 3b38680 (Read and write counter to Json):src/Interfaces/main.java
 =======
 >>>>>>> parent of 3b38680 (Read and write counter to Json):src/Interfaces/main.java
 /**
@@ -40,6 +43,9 @@ public class main extends javax.swing.JFrame {
      * Creates new form main
      */
     public main() {
+<<<<<<< HEAD:src/Interfaces/mainAI.java
+>>>>>>> parent of 3b38680 (Read and write counter to Json):src/Interfaces/main.java
+=======
 >>>>>>> parent of 3b38680 (Read and write counter to Json):src/Interfaces/main.java
         initComponents();
     }
