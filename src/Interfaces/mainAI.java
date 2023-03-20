@@ -5,16 +5,20 @@
  */
 package Interfaces;
 
+<<<<<<< HEAD:src/Interfaces/mainAI.java
 import Classes.TLOU.EpisodeTLOU;
 import Classes.TLOU.ManagerTLOU;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
+=======
+>>>>>>> parent of 3b38680 (Read and write counter to Json):src/Interfaces/main.java
 /**
  *
  * @author emilo
  */
+<<<<<<< HEAD:src/Interfaces/mainAI.java
 public class mainAI extends javax.swing.JFrame {
     ManagerTLOU TLOUInstance;
     /**
@@ -29,6 +33,14 @@ public class mainAI extends javax.swing.JFrame {
         
         
         
+=======
+public class main extends javax.swing.JFrame {
+
+    /**
+     * Creates new form main
+     */
+    public main() {
+>>>>>>> parent of 3b38680 (Read and write counter to Json):src/Interfaces/main.java
         initComponents();
     }
 
@@ -54,11 +66,11 @@ public class mainAI extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        first2 = new javax.swing.JLabel();
-        first3 = new javax.swing.JLabel();
-        first4 = new javax.swing.JLabel();
-        first1 = new javax.swing.JLabel();
-        first5 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -122,30 +134,30 @@ public class mainAI extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 290, 200));
 
-        first2.setBackground(new java.awt.Color(204, 255, 255));
-        first2.setForeground(new java.awt.Color(255, 51, 204));
-        first2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 40, 30));
+        jLabel5.setBackground(new java.awt.Color(204, 255, 255));
+        jLabel5.setForeground(new java.awt.Color(255, 51, 204));
+        jLabel5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 40, 30));
 
-        first3.setBackground(new java.awt.Color(204, 255, 255));
-        first3.setForeground(new java.awt.Color(255, 51, 204));
-        first3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 40, 30));
+        jLabel6.setBackground(new java.awt.Color(204, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(255, 51, 204));
+        jLabel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 40, 30));
 
-        first4.setBackground(new java.awt.Color(204, 255, 255));
-        first4.setForeground(new java.awt.Color(255, 51, 204));
-        first4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 40, 30));
+        jLabel7.setBackground(new java.awt.Color(204, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(255, 51, 204));
+        jLabel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 40, 30));
 
-        first1.setBackground(new java.awt.Color(204, 255, 255));
-        first1.setForeground(new java.awt.Color(255, 51, 204));
-        first1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 200, 30));
+        jLabel8.setBackground(new java.awt.Color(204, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(255, 51, 204));
+        jLabel8.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 40, 30));
 
-        first5.setBackground(new java.awt.Color(204, 255, 255));
-        first5.setForeground(new java.awt.Color(255, 51, 204));
-        first5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(first5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 40, 30));
+        jLabel17.setBackground(new java.awt.Color(204, 255, 255));
+        jLabel17.setForeground(new java.awt.Color(255, 51, 204));
+        jLabel17.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 40, 30));
 
         jLabel18.setBackground(new java.awt.Color(204, 255, 255));
         jLabel18.setForeground(new java.awt.Color(255, 51, 204));
@@ -212,11 +224,6 @@ public class mainAI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JLabel first1;
-    private javax.swing.JLabel first2;
-    private javax.swing.JLabel first3;
-    private javax.swing.JLabel first4;
-    private javax.swing.JLabel first5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -225,6 +232,7 @@ public class mainAI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -233,6 +241,10 @@ public class mainAI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
