@@ -55,8 +55,8 @@ public class EpisodeTLOU {
 
     private int setQuality(int quality) {
         int randIntro = getRandom(0,100);
-        int randBeg = getRandom(0,100);
-        int randEnd = getRandom(0,100);
+        int randBeg = getRandom(0,100); // Recordar que son 2 inicios
+        int randEnd = getRandom(0,100); // Recordar que son 2 cierres
         int randCredit = getRandom(0,100);
         
         if (randIntro <= 75) {

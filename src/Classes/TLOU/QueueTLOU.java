@@ -104,7 +104,7 @@ public class QueueTLOU {
         for (int i = 0; i < size; i++) {
             EpisodeTLOU node = this.Dequeue();
             node.setNext(null);
-            string = "ID Escritorio: " + Integer.toString(node.getId()) + " " + "(Contador: " +Integer.toString(node.getCounter()) + ")" + "\n";
+            string = "ID: " + Integer.toString(node.getId()) + ".TLOU " + "(Contador: " +Integer.toString(node.getCounter()) + ")" + "\n";
             this.EnqueueNode(node);
         }
         return string;
