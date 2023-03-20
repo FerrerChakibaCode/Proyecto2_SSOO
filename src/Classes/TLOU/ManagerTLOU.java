@@ -41,11 +41,11 @@ public class ManagerTLOU extends Thread{
             idCounter++;
             EpisodeTLOU episode = new EpisodeTLOU(idCounter, 0);
             if (episode.getDuration() <= 59) {
-                thirdQueue.Enqueue(idCounter, 0);
+                thirdQueue.EnqueueNode(episode);
             } else if (episode.getDuration() >= 60 && episode.getDuration() <= 90) {
-                secondQueue.Enqueue(idCounter, 0);
+                secondQueue.EnqueueNode(episode);
             } else if (episode.getDuration() > 90) {
-                firstQueue.Enqueue(idCounter, 0);
+                firstQueue.EnqueueNode(episode);
             }
             writeJson();
         }
