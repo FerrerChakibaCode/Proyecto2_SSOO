@@ -21,12 +21,13 @@ import org.json.simple.parser.ParseException;
  *
  * @author emilo
  */
-public class ManagerGOT extends Thread{
+public class ManagerGOT extends Thread {
+
     // Hacemos las 4 colas
     public static QueueGOT firstQueue;
     public static QueueGOT secondQueue;
     public static QueueGOT thirdQueue;
-    public static QueueGOT  strengthQueue;
+    public static QueueGOT strengthQueue;
     public static int idCounter;
     private boolean stop;
 
@@ -37,55 +38,74 @@ public class ManagerGOT extends Thread{
         this.strengthQueue = strengthQueue;
         readJson();
     }
-    
+
     @Override
     public void run() {
         while (!stop) {
             try {
                 Thread.sleep(1000);
                 ProduceEpisode();
+                updateCounters(firstQueue);
+                updateCounters(secondQueue);
+                updateCounters(thirdQueue);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ManagerGOT.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
     public static void ProduceEpisode() {
         idCounter++;
         EpisodeGOT episode = new EpisodeGOT(idCounter);
         switch (episode.getPriority()) {
             case 1:
                 firstQueue.enqueue(episode);
-                Interfaces.main.queue1GOT.setText(firstQueue.printQueue());
                 break;
             case 2:
                 secondQueue.enqueue(episode);
-                Interfaces.main.queue2GOT.setText(secondQueue.printQueue());
                 break;
             case 3:
                 thirdQueue.enqueue(episode);
-                Interfaces.main.queue3GOT.setText(thirdQueue.printQueue());
                 break;
         }
+        updateQueuesLabels();
         writeJson();
     }
-    
-    public void updateCounters(QueueGOT queue, QueueGOT nextQueue) {
+
+    public static void updateQueuesLabels() {
+        Interfaces.main.queue1GOT.setText(firstQueue.printQueue());
+        Interfaces.main.queue2GOT.setText(secondQueue.printQueue());
+        Interfaces.main.queue3GOT.setText(thirdQueue.printQueue());
+    }
+
+    public void updateCounters(QueueGOT queue) {
         for (int i = 0; i < queue.getSize(); i++) {
             EpisodeGOT episodeAux = queue.dequeue(); // Asignamos el aux al primer elemento de la cola
             episodeAux.setNext(null);
-            if (episodeAux.getCounter() >= 8) {
-                episodeAux.setCounter(0);
-                nextQueue.enqueue(episodeAux); // Sube la prioridad del elemento
-            } else {
+            if (queue.getNumber() == 1) {
                 episodeAux.setCounter(episodeAux.getCounter() + 1);
                 queue.enqueue(episodeAux);
-            }
 
+            } else {
+                if (episodeAux.getCounter() >= 8) {
+                    episodeAux.setCounter(0);
+                    if (queue.getNumber() == 3) {
+                        episodeAux.changePriority(2);
+                        secondQueue.enqueue(episodeAux); // Sube la prioridad del elemento
+                    } else if (queue.getNumber() == 2) {
+                        episodeAux.changePriority(1);
+                        firstQueue.enqueue(episodeAux); // Sube la prioridad del elemento
+                    }
+                } else {
+                    episodeAux.setCounter(episodeAux.getCounter() + 1);
+                    queue.enqueue(episodeAux);
+                }
+            }
+            updateQueuesLabels();
         }
     }
-    
-    public  void readJson() throws ParseException {
+
+    public void readJson() throws ParseException {
 
         JSONParser parser = new JSONParser();
 
@@ -98,20 +118,18 @@ public class ManagerGOT extends Thread{
             e.printStackTrace();
         }
     }
-    
+
     public static void writeJson() {
-       JSONObject object = new JSONObject();
-       object.put("counter", idCounter);
-        
-       try ( FileWriter file = new FileWriter("src/Assets/dataGOT.json")) {
+        JSONObject object = new JSONObject();
+        object.put("counter", idCounter);
+
+        try ( FileWriter file = new FileWriter("src/Assets/dataGOT.json")) {
             file.write(object.toJSONString());
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-       
+
     }
-    
-    
-    
+
 }

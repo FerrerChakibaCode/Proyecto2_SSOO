@@ -29,11 +29,15 @@ public class EpisodeGOT {
     
     public int setPriority() {
         int priority;
-        if(duration > 90) priority = 1;
+        if (duration > 90) priority = 1;
         else if (duration <= 90 && duration > 60) priority = 2;
         else priority = 3;
 
         return priority;
+    }
+    
+    public void changePriority(int priority) {
+        this.priority = priority;
     }
 
     public int getPriority() {
