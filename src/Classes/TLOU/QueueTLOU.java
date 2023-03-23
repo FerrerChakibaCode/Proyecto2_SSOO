@@ -7,7 +7,7 @@ package Classes.TLOU;
 
 /**
  *
- * @author emilo
+ * @author Nicolás Briceño
  */
 
 public class QueueTLOU {
@@ -15,13 +15,27 @@ public class QueueTLOU {
     private EpisodeTLOU head;
     private EpisodeTLOU tail;
     private int size;
+    private int number;
     
     /**
      *
      */
-    public QueueTLOU() {
+    public QueueTLOU(int number) {
         this.head = this.tail = null;
         this.size = 0;
+        this.number = number;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
     
     public void Empty() {
@@ -34,7 +48,7 @@ public class QueueTLOU {
     }
     
     public void Enqueue(int ID, int counter) {
-        EpisodeTLOU newNode = new EpisodeTLOU(ID, counter);
+        EpisodeTLOU newNode = new EpisodeTLOU(ID);
         if (this.isEmpty()) {
             this.head = this.tail = newNode;
         } else {
@@ -72,40 +86,15 @@ public class QueueTLOU {
         return newNode;
     }
     
-    public QueueTLOU UpdateCounter() {
-        QueueTLOU aux = new QueueTLOU();
-        for (int i = 0; i < size; i++) {
-            EpisodeTLOU auxNode = this.Dequeue();
-            auxNode.setCounter(auxNode.getCounter() + 1);
-            auxNode.setNext(null);
-            if (auxNode.getCounter() < 8) {
-                this.EnqueueNode(auxNode);
-            }else{
-                auxNode.setCounter(0);
-                aux.EnqueueNode(auxNode);
-            }
-        }
-        return aux;
-    }
-    /*
-    public String EnqueueQueue(QueueTLOU queue){
-        String string = "";
-        while(!queue.isEmpty()){
-            EpisodeTLOU node = queue.Dequeue();
-            node.updatePriority();
-            string += Integer.toString(node.getID()) + ",";
-            this.EnqueueNode(node);
-        }
-        return string;
-    }
-    */
     public String PrintQueue(){
         String string = "";
         for (int i = 0; i < size; i++) {
             EpisodeTLOU node = this.Dequeue();
             node.setNext(null);
-            string = "ID: " + Integer.toString(node.getId()) + ".TLOU " + "(Contador: " +Integer.toString(node.getCounter()) + ")" + "\n";
+            String sentence = "ID: " + Integer.toString(node.getId()) + ".TLOU " + "(Contador: " +Integer.toString(node.getCounter()) + " / Duración: " + Integer.toString(node.getDuration()) + ")" + "\n";
             this.EnqueueNode(node);
+            string += sentence;
+            
         }
         return string;
     }

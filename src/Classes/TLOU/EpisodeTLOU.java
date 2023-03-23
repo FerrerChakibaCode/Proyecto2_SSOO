@@ -10,6 +10,7 @@ public class EpisodeTLOU {
     private int counter; // Contador que al llegar a 8 escala la prioridad del episodio
     private int duration;
     private int quality; // Valor del 0 al 4 dependiendo de cada una de sus partes
+    private int priority;
     
     /**
      *
@@ -17,35 +18,32 @@ public class EpisodeTLOU {
      * @param id
      * @param counter
      */
-    public EpisodeTLOU (int id, int counter) {
+    public EpisodeTLOU (int id) {
         this.next = null;
         this.id = id;
-        this.counter = counter;
-        this.duration = setDuration(getRandom(1,3));
-        System.out.println("La duración del episodio: " + this.id + ", es de " + this.duration);
-        this.quality = setQuality(0);
-        System.out.println("La calidad del episodio: " + this.id + ", es de " + this.quality);
+        this.counter = 0;
+        this.duration = 0;//setDuration(getRandom(1,3));
+        this.quality = setQuality();
+        this.priority = setPriority();
+    }
 
+    public int setPriority() {
+        int priority;
+        if (duration > 90) {
+            priority = 1;
+        } else if (duration <= 90 && duration > 60) {
+            priority = 2;
+        } else {
+            priority = 3;
+        }
+        return priority;
+    }
+    
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public int getDuration() {
-        return duration;
-    }
-
-    private int setDuration(int duration) {
-        switch (duration) {
-            case 1:
-                this.duration = getRandom(15,59); //Pongamos 15 como el mínimo para una serie
-                break;
-            case 2:
-                this.duration = getRandom(60,90);
-                break;
-            case 3:
-                this.duration = getRandom(91,150); //150 porque hay series con capítulos de hasta 150 min
-                break;
-            default:
-                break;
-        }
         return duration;
     }
     
@@ -53,23 +51,35 @@ public class EpisodeTLOU {
         return quality;
     }
 
-    private int setQuality(int quality) {
+    private int setQuality() {
+        quality = 0;
         int randIntro = getRandom(0,100);
-        int randBeg = getRandom(0,100); // Recordar que son 2 inicios
-        int randEnd = getRandom(0,100); // Recordar que son 2 cierres
+        int randBeg = getRandom(0,100) * getRandom(0,100); // Recordar que son 2 inicios
+        int randEnd = getRandom(0,100) * getRandom(0,100); // Recordar que son 2 cierres
         int randCredit = getRandom(0,100);
         
         if (randIntro <= 75) {
             quality++;
-        } else if (randBeg <= 84) {
+            duration += 35;
+        } 
+        if (randBeg <= 84) {
             quality++;
-        } else if (randEnd <= 80) {
+            duration += 35;
+        } 
+        if (randEnd <= 80) {
             quality++;
-        } else if (randCredit <= 85) {
+            duration += 35;            
+        }
+        if (randCredit <= 85) {
             quality++;
+            duration += 35;            
         }
         
         return quality;
+    }
+    
+    public void setQuality(int quality) {
+        this.quality = quality;
     }
     
     public int getId() {

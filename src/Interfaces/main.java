@@ -5,6 +5,8 @@
  */
 package Interfaces;
 
+import Classes.TLOU.ManagerTLOU;
+import Classes.TLOU.QueueTLOU;
 import GOT.AI;
 import GOT.ManagerGOT;
 import GOT.QueueGOT;
@@ -23,11 +25,11 @@ public class main extends javax.swing.JFrame {
     public static ManagerGOT managerGOT;
 
     // TLOU
-    public static QueueGOT firstQueueTLOU;
-    public static QueueGOT secondQueueTLOU;
-    public static QueueGOT thirdQueueTLOU;
-    public static QueueGOT strengthQueueTLOU;
-    public static ManagerGOT managerTLOU;
+    public static QueueTLOU firstQueueTLOU;
+    public static QueueTLOU secondQueueTLOU;
+    public static QueueTLOU thirdQueueTLOU;
+    public static QueueTLOU strengthQueueTLOU;
+    public static ManagerTLOU managerTLOU;
 
     /**
      * Creates new form main
@@ -35,6 +37,7 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
         loadManagerGOT();
+        loadManagerTLOU();
         loadAI();
 
     }
@@ -43,7 +46,12 @@ public class main extends javax.swing.JFrame {
         this.managerGOT = new ManagerGOT();
         this.managerGOT.start();
     }
-
+    
+    public void loadManagerTLOU() {
+        this.managerTLOU = new ManagerTLOU();
+        this.managerTLOU.start();
+    }
+    
     public void loadAI() {
         AI ai = new AI(managerGOT, managerTLOU);
         ai.start();
@@ -232,25 +240,25 @@ public class main extends javax.swing.JFrame {
         queue1TLOU.setRows(5);
         queue1TLOUPanel.setViewportView(queue1TLOU);
 
-        getContentPane().add(queue1TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 190, -1, -1));
+        getContentPane().add(queue1TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(854, 190, 270, -1));
 
         queue2TLOU.setColumns(20);
         queue2TLOU.setRows(5);
         queue2TLOUPanel.setViewportView(queue2TLOU);
 
-        getContentPane().add(queue2TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 340, -1, -1));
+        getContentPane().add(queue2TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(854, 340, 270, -1));
 
         queue3TLOU.setColumns(20);
         queue3TLOU.setRows(5);
         queue3TLOUPanel.setViewportView(queue3TLOU);
 
-        getContentPane().add(queue3TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 470, -1, -1));
+        getContentPane().add(queue3TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(854, 470, 270, -1));
 
         queue4TLOU.setColumns(20);
         queue4TLOU.setRows(5);
         queue4TLOUPanel.setViewportView(queue4TLOU);
 
-        getContentPane().add(queue4TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 600, -1, -1));
+        getContentPane().add(queue4TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 600, 270, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

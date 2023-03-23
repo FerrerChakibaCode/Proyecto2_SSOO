@@ -40,7 +40,7 @@ public class EpisodeGOT {
         return priority;
     }
 
-    public void changePriority(int priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 

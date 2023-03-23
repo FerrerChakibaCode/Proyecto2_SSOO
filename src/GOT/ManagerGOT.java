@@ -79,9 +79,6 @@ public class ManagerGOT extends Thread {
     }
 
     public static void updateQueuesLabels() {
-        System.out.println("1: " + firstQueue.printQueue());
-        System.out.println("2: " + secondQueue.printQueue());
-        System.out.println("3: " + thirdQueue.printQueue());
         main.queue1GOT.setText(firstQueue.printQueue());
         main.queue2GOT.setText(secondQueue.printQueue());
         main.queue3GOT.setText(thirdQueue.printQueue());
@@ -99,10 +96,10 @@ public class ManagerGOT extends Thread {
                 if (episodeAux.getCounter() >= 8) {
                     episodeAux.setCounter(0);
                     if (queue.getNumber() == 3) {
-                        episodeAux.changePriority(2);
+                        episodeAux.setPriority(2);
                         secondQueue.enqueue(episodeAux); // Sube la prioridad del elemento
                     } else if (queue.getNumber() == 2) {
-                        episodeAux.changePriority(1);
+                        episodeAux.setPriority(1);
                         firstQueue.enqueue(episodeAux); // Sube la prioridad del elemento
                     }
                 } else {
