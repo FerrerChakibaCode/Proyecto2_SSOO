@@ -31,11 +31,13 @@ public class ManagerTLOU extends Thread {
     private boolean stop;
 
     public ManagerTLOU() {
+        
         ManagerTLOU.firstQueue = new QueueTLOU(1);
         ManagerTLOU.secondQueue = new QueueTLOU(2);
         ManagerTLOU.thirdQueue = new QueueTLOU(3);
         ManagerTLOU.backupQueue = new QueueTLOU(4);
         readJson();
+        ProduceEpisode();
     }
 
     @Override

@@ -26,6 +26,7 @@ public class AI extends Thread {
     public static QueueGOT secondQueueGOT;
     public static QueueGOT thirdQueueGOT;
     public static QueueGOT strengthQueueGOT;
+    public static int prevQueueGOT;
 
     // TLOU
     public static ManagerTLOU managerTLOU;
@@ -34,11 +35,12 @@ public class AI extends Thread {
     public static QueueTLOU secondQueueTLOU;
     public static QueueTLOU thirdQueueTLOU;
     public static QueueTLOU strengthQueueTLOU;
+    public static int prevQueueTLOU;
 
     //Sobre el AI como tal
     public static int whoWon; // 1 for GOT, 0 for TLOU, -1 para empate
     private boolean stop;
-    public static int cedulas = 19; // 9 Emilio + 10 enunciado
+    public static int cedulas = 1; // 9 Emilio + 10 enunciado
 
     public AI(ManagerGOT managerGOT, ManagerTLOU managerTLOU) {
         this.managerGOT = managerGOT;
@@ -46,14 +48,13 @@ public class AI extends Thread {
         this.secondQueueGOT = managerGOT.secondQueue;
         this.thirdQueueGOT = managerGOT.thirdQueue;
         this.strengthQueueGOT = managerGOT.strengthQueue;
-        
+
         this.managerTLOU = managerTLOU;
         this.firstQueueTLOU = managerTLOU.firstQueue;
         this.secondQueueTLOU = managerTLOU.secondQueue;
         this.thirdQueueTLOU = managerTLOU.thirdQueue;
         this.strengthQueueTLOU = managerTLOU.backupQueue;
-        
-        
+
     }
 
     @Override
@@ -77,20 +78,23 @@ public class AI extends Thread {
     public void getFighters() {
         if (!firstQueueGOT.isEmpty()) {
             fighterGOT = firstQueueGOT.dequeue();
+            prevQueueGOT = 1;
         } else if (firstQueueGOT.isEmpty() && !secondQueueGOT.isEmpty()) {
             fighterGOT = secondQueueGOT.dequeue();
+            prevQueueGOT = 2;
         } else if (secondQueueGOT.isEmpty() && !thirdQueueGOT.isEmpty()) {
             fighterGOT = thirdQueueGOT.dequeue();
+            prevQueueGOT = 3;
         } else {
             fighterGOT = null; // REVISAR
         }
 
         if (!firstQueueTLOU.isEmpty()) {
-            fighterTLOU = firstQueueTLOU.dequeue();
+            fighterTLOU = firstQueueTLOU.Dequeue();
         } else if (firstQueueTLOU.isEmpty() && !secondQueueTLOU.isEmpty()) {
-            fighterTLOU = secondQueueTLOU.dequeue();
+            fighterTLOU = secondQueueTLOU.Dequeue();
         } else if (secondQueueTLOU.isEmpty() && !thirdQueueTLOU.isEmpty()) {
-            fighterTLOU = thirdQueueTLOU.dequeue();
+            fighterTLOU = thirdQueueTLOU.Dequeue();
         } else {
             fighterTLOU = null; // REVISAR
         }
@@ -116,21 +120,23 @@ public class AI extends Thread {
     }
 
     public void getWinner() { // NOTA: en verdad las batallas pueden NO ser por calidad, sino capaz agregar una funcion que tome la duracion y haga unos calculos locos
-        if (fighterGOT.getQuality() == fighterTLOU.getQuality()) {
-            int giveAdvantage = randomInt(0, 100);
-            if (giveAdvantage > 50) {
-                fighterGOT.setQuality(fighterGOT.getQuality() + 1);
-            } else {
-                fighterTLOU.setQuality(fighterTLOU.getQuality() + 1);
+        if (fighterGOT != null && fighterTLOU != null) {
+
+            if (fighterGOT.getQuality() == fighterTLOU.getQuality()) {
+                int giveAdvantage = randomInt(0, 100);
+                if (giveAdvantage > 50) {
+                    fighterGOT.setQuality(fighterGOT.getQuality() + 1);
+                } else {
+                    fighterTLOU.setQuality(fighterTLOU.getQuality() + 1);
+                }
+            }
+            whoWon = fighterGOT.getQuality() > fighterTLOU.getQuality() ? 1 : 0;
+            if (whoWon == 1) {
+                Interfaces.main.winner.setText("GOT");
+            } else if (whoWon == 0) {
+                main.winner.setText("The Last Of Us");
             }
         }
-        whoWon = fighterGOT.getQuality() > fighterTLOU.getQuality() ? 1 : 0;
-        if (whoWon == 1) {
-            Interfaces.main.winner.setText("GOT");
-        } else if (whoWon == 0) {
-            main.winner.setText("The Last Of Us");
-        };
-
     }
 
     public void draw() {
@@ -140,6 +146,7 @@ public class AI extends Thread {
 
     public void reinforceEpisodes() {
         main.winner.setText("A reforzarse...");
+
     }
 
     public void printFighters() {
@@ -153,7 +160,7 @@ public class AI extends Thread {
         }
         if (fighterTLOU != null) {
             main.idFighterTLOU.setText(Integer.toString(fighterTLOU.getId()));
-            main.qualFighterTLOU.setText(Integer.toString(fighterGOT.getQuality()));
+            main.qualFighterTLOU.setText(Integer.toString(fighterTLOU.getQuality()));
         } else {
             main.idFighterTLOU.setText("NO HAY FIGHTER");
             main.qualFighterTLOU.setText("NO TIENE CALIDAD ALGUIEN QUE NO EXISTE");

@@ -55,8 +55,6 @@ public class EpisodeGOT {
     public int getDuration() {
         return duration;
     }
-    
-    
 
     public int getId() {
         return id;
@@ -88,7 +86,6 @@ public class EpisodeGOT {
         int ending = randomInt(0, 100) * randomInt(0, 100);
         int credits = randomInt(0, 100);
 
-        
         // Con la calidad veremos quien gana y quien pierde en el AI
         // Aqui si el intro es exitoso, el episodio tiene 15 mins de duracion de intro, y asi con todas las partes
         // De esta forma si todo es exitoso, el episodio tiene calidad completa, y por ende, prioridad 1
@@ -111,7 +108,7 @@ public class EpisodeGOT {
 
         return quality;
     }
-    
+
     public void setQuality(int quality) {
         this.quality = quality;
     }
