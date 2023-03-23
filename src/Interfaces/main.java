@@ -5,10 +5,9 @@
  */
 package Interfaces;
 
-import Classes.GOT.AI;
-
-import Classes.GOT.ManagerGOT;
-import Classes.GOT.QueueGOT;
+import GOT.AI;
+import GOT.ManagerGOT;
+import GOT.QueueGOT;
 
 /**
  *
