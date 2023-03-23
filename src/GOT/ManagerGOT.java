@@ -34,23 +34,26 @@ public class ManagerGOT extends Thread {
     public ManagerGOT() {
         readJson();
         loadQueuesGOT();
+        ProduceEpisode();
     }
 
     @Override
     public void run() {
         while (!stop) {
-            try {
-                ProduceEpisode();
-                updateCounters(firstQueue);
-                updateCounters(secondQueue);
-                updateCounters(thirdQueue);
-
-                Thread.sleep(10000);
-
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ManagerGOT.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            ;
         }
+//            try {
+//                ProduceEpisode();
+//                updateCounters(firstQueue);
+//                updateCounters(secondQueue);
+//                updateCounters(thirdQueue);
+//
+//                Thread.sleep(10000);
+
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(ManagerGOT.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
 
     public void loadQueuesGOT() {
@@ -74,20 +77,20 @@ public class ManagerGOT extends Thread {
                 thirdQueue.enqueue(episode);
                 break;
         }
+        updateCounters(firstQueue);
+        updateCounters(secondQueue);
+        updateCounters(thirdQueue);
         updateQueuesLabels();
         writeJson();
     }
 
     public static void updateQueuesLabels() {
-        System.out.println("1: " + firstQueue.printQueue());
-        System.out.println("2: " + secondQueue.printQueue());
-        System.out.println("3: " + thirdQueue.printQueue());
         main.queue1GOT.setText(firstQueue.printQueue());
         main.queue2GOT.setText(secondQueue.printQueue());
         main.queue3GOT.setText(thirdQueue.printQueue());
     }
 
-    public void updateCounters(QueueGOT queue) {
+    public static void updateCounters(QueueGOT queue) {
         for (int i = 0; i < queue.getSize(); i++) {
             EpisodeGOT episodeAux = queue.dequeue(); // Asignamos el aux al primer elemento de la cola
             episodeAux.setNext(null);
@@ -99,10 +102,10 @@ public class ManagerGOT extends Thread {
                 if (episodeAux.getCounter() >= 8) {
                     episodeAux.setCounter(0);
                     if (queue.getNumber() == 3) {
-                        episodeAux.changePriority(2);
+                        episodeAux.setPriority(2);
                         secondQueue.enqueue(episodeAux); // Sube la prioridad del elemento
                     } else if (queue.getNumber() == 2) {
-                        episodeAux.changePriority(1);
+                        episodeAux.setPriority(1);
                         firstQueue.enqueue(episodeAux); // Sube la prioridad del elemento
                     }
                 } else {

@@ -15,6 +15,8 @@ import GOT.QueueGOT;
  */
 public class main extends javax.swing.JFrame {
 
+    public static AI ai;
+    
     // GOT
     public static QueueGOT firstQueueGOT;
     public static QueueGOT secondQueueGOT;
@@ -45,8 +47,8 @@ public class main extends javax.swing.JFrame {
     }
 
     public void loadAI() {
-        AI ai = new AI(managerGOT, managerTLOU);
-        ai.start();
+        this.ai = new AI(managerGOT, managerTLOU);
+        this.ai.start();
     }
 
     /**
@@ -134,7 +136,7 @@ public class main extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel13.setText("Queue Refuerzo");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 220, -1));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 220, -1));
 
         jLabel14.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel14.setText("Queue prioridad 3");
@@ -145,28 +147,32 @@ public class main extends javax.swing.JFrame {
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 220, -1));
 
         queue1GOT.setColumns(20);
+        queue1GOT.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         queue1GOT.setRows(5);
         queue1GOTPanel.setViewportView(queue1GOT);
 
-        getContentPane().add(queue1GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        getContentPane().add(queue1GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 260, -1));
 
         queue2GOT.setColumns(20);
+        queue2GOT.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         queue2GOT.setRows(5);
         queue2GOTPanel.setViewportView(queue2GOT);
 
-        getContentPane().add(queue2GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
+        getContentPane().add(queue2GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 260, -1));
 
         queue3GOT.setColumns(20);
+        queue3GOT.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         queue3GOT.setRows(5);
         queue3GOTPanel.setViewportView(queue3GOT);
 
-        getContentPane().add(queue3GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, -1, -1));
+        getContentPane().add(queue3GOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 260, -1));
 
         queueStrengthGOT.setColumns(20);
+        queueStrengthGOT.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         queueStrengthGOT.setRows(5);
         queueStrengthGOTPanel.setViewportView(queueStrengthGOT);
 
-        getContentPane().add(queueStrengthGOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+        getContentPane().add(queueStrengthGOTPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, 260, -1));
 
         jLabel17.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel17.setText("Queue prioridad 1");

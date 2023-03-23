@@ -23,7 +23,6 @@ public class AI extends Thread {
     public static QueueGOT secondQueueGOT;
     public static QueueGOT thirdQueueGOT;
     public static QueueGOT strengthQueueGOT;
-    
 
     // TLOU
     public static ManagerGOT managerTLOU; // PONER AQUI LA CLASE DE MANAGERTLOU
@@ -36,7 +35,7 @@ public class AI extends Thread {
     //Sobre el AI como tal
     public static int whoWon; // 1 for GOT, 0 for TLOU, -1 para empate
     private boolean stop;
-    public static int cedulas = 19; // 9 Emilio + 10 enunciado
+    public static int cedulas = 10; // 9 Emilio + 10 enunciado
 
     public AI(ManagerGOT managerGOT, ManagerGOT managerTLOU) {
         this.managerGOT = managerGOT;
@@ -44,20 +43,23 @@ public class AI extends Thread {
         this.secondQueueGOT = managerGOT.secondQueue;
         this.thirdQueueGOT = managerGOT.thirdQueue;
         this.strengthQueueGOT = managerGOT.strengthQueue;
-        
-//        this.managerTLOU = managerTLOU;
-//        this.firstQueueTLOU = managerTLOU.firstQueue;
-//        this.secondQueueGOT = managerTLOU.secondQueue;
-//        this.thirdQueueGOT = managerTLOU.thirdQueue;
-//        this.strengthQueueTLOU = managerTLOU.strengthQueue;
-        
-        
+
+        this.managerTLOU = managerTLOU;
+        this.firstQueueTLOU = managerTLOU.firstQueue;
+        this.secondQueueGOT = managerTLOU.secondQueue;
+        this.thirdQueueGOT = managerTLOU.thirdQueue;
+        this.strengthQueueTLOU = managerTLOU.strengthQueue;
     }
 
     @Override
     public void run() {
         while (!stop) {
             try {
+                managerGOT.ProduceEpisode();
+                managerTLOU.ProduceEpisode();
+                getFighters();
+                Thread.sleep(cedulas * 1000);
+                whichScenario();
                 getFighters();
                 Thread.sleep(cedulas * 1000);
                 whichScenario();
@@ -78,15 +80,15 @@ public class AI extends Thread {
             fighterGOT = null; // REVISAR
         }
 
-//        if (!firstQueueTLOU.isEmpty()) {
-//            fighterTLOU = firstQueueTLOU.dequeue();
-//        } else if (firstQueueTLOU.isEmpty() && !secondQueueTLOU.isEmpty()) {
-//            fighterTLOU = secondQueueTLOU.dequeue();
-//        } else if (secondQueueTLOU.isEmpty() && !thirdQueueTLOU.isEmpty()) {
-//            fighterTLOU = thirdQueueTLOU.dequeue();
-//        } else {
-//            fighterTLOU = null; // REVISAR
-//        }
+        if (!firstQueueTLOU.isEmpty()) {
+            fighterTLOU = firstQueueTLOU.dequeue();
+        } else if (firstQueueTLOU.isEmpty() && !secondQueueTLOU.isEmpty()) {
+            fighterTLOU = secondQueueTLOU.dequeue();
+        } else if (secondQueueTLOU.isEmpty() && !thirdQueueTLOU.isEmpty()) {
+            fighterTLOU = thirdQueueTLOU.dequeue();
+        } else {
+            fighterTLOU = null; // REVISAR
+        }
 
         printFighters();
     }
@@ -134,11 +136,23 @@ public class AI extends Thread {
     public void reinforceEpisodes() {
         main.winner.setText("A reforzarse...");
     }
-    
+
     public void printFighters() {
         //GOT
-        main.idFighterGOT.setText(Integer.toString(fighterGOT.getId()));
-        main.qualFighterGOT.setText(Integer.toString(fighterGOT.getQuality()));
+        if (fighterGOT != null) {
+            main.idFighterGOT.setText(Integer.toString(fighterGOT.getId()));
+            main.qualFighterGOT.setText(Integer.toString(fighterGOT.getQuality()));
+        } else {
+            main.idFighterGOT.setText("NO HAY FIGHTER");
+            main.qualFighterGOT.setText("NO TIENE CALIDAD ALGUIEN QUE NO EXISTE");
+        }
+        if (fighterTLOU != null) {
+            main.idFighterTLOU.setText(Integer.toString(fighterTLOU.getId()));
+            main.qualFighterTLOU.setText(Integer.toString(fighterGOT.getQuality()));
+        } else {
+            main.idFighterTLOU.setText("NO HAY FIGHTER");
+            main.qualFighterTLOU.setText("NO TIENE CALIDAD ALGUIEN QUE NO EXISTE");
+        }
     }
 
     public int randomInt(int min, int max) {

@@ -21,7 +21,6 @@ public class EpisodeGOT {
     public EpisodeGOT(int id) {
         this.id = id;
         this.counter = 0;
-//        this.duration = setDuration();
         this.quality = setQuality();
         this.priority = setPriority();
         this.next = null;
@@ -40,7 +39,7 @@ public class EpisodeGOT {
         return priority;
     }
 
-    public void changePriority(int priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
