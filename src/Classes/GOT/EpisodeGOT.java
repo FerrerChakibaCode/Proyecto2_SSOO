@@ -21,21 +21,25 @@ public class EpisodeGOT {
     public EpisodeGOT(int id) {
         this.id = id;
         this.counter = 0;
-        this.duration = setDuration();
+//        this.duration = setDuration();
         this.quality = setQuality();
         this.priority = setPriority();
         this.next = null;
     }
-    
+
     public int setPriority() {
         int priority;
-        if (duration > 90) priority = 1;
-        else if (duration <= 90 && duration > 60) priority = 2;
-        else priority = 3;
+        if (duration > 90) {
+            priority = 1;
+        } else if (duration <= 90 && duration > 60) {
+            priority = 2;
+        } else {
+            priority = 3;
+        }
 
         return priority;
     }
-    
+
     public void changePriority(int priority) {
         this.priority = priority;
     }
@@ -48,6 +52,12 @@ public class EpisodeGOT {
         duration = randomInt(30, 120);
         return duration;
     }
+
+    public int getDuration() {
+        return duration;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -73,19 +83,38 @@ public class EpisodeGOT {
         quality = 0;
         int intro = randomInt(0, 100);
         int beginning = randomInt(0, 100);
-        
+
         //Endings tiene que ser multiplicado por otro randint porque tienen
         //que ser 2 endings producidos que sean exitosos
         int ending = randomInt(0, 100) * randomInt(0, 100);
         int credits = randomInt(0, 100);
 
-        if (intro <= 75) quality++;
-        if (beginning <= 84) quality++;
-        if (ending <= 80) quality++;
-        if (credits <= 85) quality++;
         
+        // Con la calidad veremos quien gana y quien pierde en el AI
+        // Aqui si el intro es exitoso, el episodio tiene 15 mins de duracion de intro, y asi con todas las partes
+        // De esta forma si todo es exitoso, el episodio tiene calidad completa, y por ende, prioridad 1
+        if (intro <= 75) {
+            quality++;
+            duration += 30;
+        };
+        if (beginning <= 84) {
+            quality++;
+            duration += 30;
+        }
+        if (ending <= 80) {
+            quality++;
+            duration += 30;
+        }
+        if (credits <= 85) {
+            quality++;
+            duration += 30;
+        }
 
         return quality;
+    }
+    
+    public void setQuality(int quality) {
+        this.quality = quality;
     }
 
     /**

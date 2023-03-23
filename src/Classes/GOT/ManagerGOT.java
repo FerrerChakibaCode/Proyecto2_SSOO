@@ -5,7 +5,7 @@
  */
 package Classes.GOT;
 
-import static Classes.GOT.MainGOT.IdCounter;
+import Interfaces.main;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,27 +31,33 @@ public class ManagerGOT extends Thread {
     public static int idCounter;
     private boolean stop;
 
-    public ManagerGOT(QueueGOT firstQueue, QueueGOT secondQueue, QueueGOT thirdQueue, QueueGOT strengthQueue) throws ParseException {
-        this.firstQueue = firstQueue;
-        this.secondQueue = secondQueue;
-        this.thirdQueue = thirdQueue;
-        this.strengthQueue = strengthQueue;
+    public ManagerGOT() {
         readJson();
+        loadQueuesGOT();
     }
 
     @Override
     public void run() {
         while (!stop) {
             try {
-                Thread.sleep(1000);
                 ProduceEpisode();
                 updateCounters(firstQueue);
                 updateCounters(secondQueue);
                 updateCounters(thirdQueue);
+
+                Thread.sleep(10000);
+
             } catch (InterruptedException ex) {
                 Logger.getLogger(ManagerGOT.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public void loadQueuesGOT() {
+        this.firstQueue = new QueueGOT(1);
+        this.secondQueue = new QueueGOT(2);
+        this.thirdQueue = new QueueGOT(3);
+        this.strengthQueue = new QueueGOT(0);
     }
 
     public static void ProduceEpisode() {
@@ -73,9 +79,12 @@ public class ManagerGOT extends Thread {
     }
 
     public static void updateQueuesLabels() {
-        Interfaces.main.queue1GOT.setText(firstQueue.printQueue());
-        Interfaces.main.queue2GOT.setText(secondQueue.printQueue());
-        Interfaces.main.queue3GOT.setText(thirdQueue.printQueue());
+        System.out.println("1: " + firstQueue.printQueue());
+        System.out.println("2: " + secondQueue.printQueue());
+        System.out.println("3: " + thirdQueue.printQueue());
+        main.queue1GOT.setText(firstQueue.printQueue());
+        main.queue2GOT.setText(secondQueue.printQueue());
+        main.queue3GOT.setText(thirdQueue.printQueue());
     }
 
     public void updateCounters(QueueGOT queue) {
@@ -105,7 +114,7 @@ public class ManagerGOT extends Thread {
         }
     }
 
-    public void readJson() throws ParseException {
+    public void readJson() {
 
         JSONParser parser = new JSONParser();
 

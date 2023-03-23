@@ -10,9 +10,9 @@ package Classes.GOT;
  * @author emilo
  */
 public class QueueGOT {
+
     private int number;
 
-    
     private EpisodeGOT head;
     private EpisodeGOT tail;
     private int size;
@@ -24,15 +24,14 @@ public class QueueGOT {
         this.head = this.tail = null;
         this.size = 0;
         this.number = number;
-        
+
     }
-    
 
     public int getNumber() {
         return number;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return this.head == null;
     }
 
@@ -66,13 +65,17 @@ public class QueueGOT {
         this.size--;
         return temp;
     }
-    
-    public String printQueue(){
+
+    public String printQueue() {
         String string = "";
+
+        if (size == 0) {
+            return string;
+        }
         for (int i = 0; i < size; i++) {
             EpisodeGOT node = this.dequeue();
             node.setNext(null);
-            String eachString = "ID: " + Integer.toString(node.getId()) + ".GOT " + "(Contador: " + Integer.toString(node.getCounter()) + ")" + "\n";
+            String eachString = "ID: " + Integer.toString(node.getId()) + ".GOT " + "(Cuenta: " + Integer.toString(node.getCounter()) + ") Duracion: " + Integer.toString(node.getDuration()) + "\n";
             this.enqueue(node);
             string += eachString;
         }
@@ -105,7 +108,5 @@ public class QueueGOT {
     public int getSize() {
         return size;
     }
-
-    
 
 }
