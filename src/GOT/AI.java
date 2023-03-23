@@ -5,6 +5,9 @@
  */
 package GOT;
 
+import Classes.TLOU.EpisodeTLOU;
+import Classes.TLOU.ManagerTLOU;
+import Classes.TLOU.QueueTLOU;
 import Interfaces.main;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,30 +28,32 @@ public class AI extends Thread {
     public static QueueGOT strengthQueueGOT;
 
     // TLOU
-    public static ManagerGOT managerTLOU; // PONER AQUI LA CLASE DE MANAGERTLOU
-    public static EpisodeGOT fighterTLOU; // PONER AQUI LA CLASE DE NICO CUANDO ESTE LISTO
-    public static QueueGOT firstQueueTLOU;
-    public static QueueGOT secondQueueTLOU;
-    public static QueueGOT thirdQueueTLOU;
-    public static QueueGOT strengthQueueTLOU;
+    public static ManagerTLOU managerTLOU;
+    public static EpisodeTLOU fighterTLOU;
+    public static QueueTLOU firstQueueTLOU;
+    public static QueueTLOU secondQueueTLOU;
+    public static QueueTLOU thirdQueueTLOU;
+    public static QueueTLOU strengthQueueTLOU;
 
     //Sobre el AI como tal
     public static int whoWon; // 1 for GOT, 0 for TLOU, -1 para empate
     private boolean stop;
-    public static int cedulas = 10; // 9 Emilio + 10 enunciado
+    public static int cedulas = 19; // 9 Emilio + 10 enunciado
 
-    public AI(ManagerGOT managerGOT, ManagerGOT managerTLOU) {
+    public AI(ManagerGOT managerGOT, ManagerTLOU managerTLOU) {
         this.managerGOT = managerGOT;
         this.firstQueueGOT = managerGOT.firstQueue;
         this.secondQueueGOT = managerGOT.secondQueue;
         this.thirdQueueGOT = managerGOT.thirdQueue;
         this.strengthQueueGOT = managerGOT.strengthQueue;
-
+        
         this.managerTLOU = managerTLOU;
         this.firstQueueTLOU = managerTLOU.firstQueue;
-        this.secondQueueGOT = managerTLOU.secondQueue;
-        this.thirdQueueGOT = managerTLOU.thirdQueue;
-        this.strengthQueueTLOU = managerTLOU.strengthQueue;
+        this.secondQueueTLOU = managerTLOU.secondQueue;
+        this.thirdQueueTLOU = managerTLOU.thirdQueue;
+        this.strengthQueueTLOU = managerTLOU.backupQueue;
+        
+        
     }
 
     @Override
@@ -123,7 +128,7 @@ public class AI extends Thread {
         if (whoWon == 1) {
             Interfaces.main.winner.setText("GOT");
         } else if (whoWon == 0) {
-            main.winner.setText("The last of us");
+            main.winner.setText("The Last Of Us");
         };
 
     }
