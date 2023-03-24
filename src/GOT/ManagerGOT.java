@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -29,9 +30,14 @@ public class ManagerGOT extends Thread {
     public static QueueGOT thirdQueue;
     public static QueueGOT strengthQueue;
     public static int idCounter;
+    private static ArrayList<Integer> winners;
+    public static boolean checkWin;
+    public static int newWinner;
     private boolean stop;
 
     public ManagerGOT() {
+        ManagerGOT.winners = new ArrayList<>();
+        ManagerGOT.checkWin = false;
         readJson();
         loadQueuesGOT();
         ProduceEpisode();
@@ -123,7 +129,7 @@ public class ManagerGOT extends Thread {
 
         JSONParser parser = new JSONParser();
 
-        try ( Reader reader = new FileReader("src/Assets/dataGOT.json")) {
+        try (Reader reader = new FileReader("src/Assets/dataGOT.json")) {
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
             idCounter = ((Long) jsonObject.get("counter")).intValue();
         } catch (IOException e) {
@@ -137,7 +143,15 @@ public class ManagerGOT extends Thread {
         JSONObject object = new JSONObject();
         object.put("counter", idCounter);
 
-        try ( FileWriter file = new FileWriter("src/Assets/dataGOT.json")) {
+        if (isCheckWin()) {
+            System.out.println("Entre en WInners GOT");
+            winners.add(getNewWinner());
+            //JSONArray winList = new JSONArray();
+            //winList.add(winners);
+            
+            object.put("winners", winners);
+        }
+        try (FileWriter file = new FileWriter("src/Assets/dataGOT.json")) {
             file.write(object.toJSONString());
             file.flush();
         } catch (IOException e) {
@@ -146,4 +160,42 @@ public class ManagerGOT extends Thread {
 
     }
 
+    /*public static void writeWinnerJson(int newWinner) { //Para mandar los ganadores al JSON
+        winners.add(newWinner);
+
+        JSONArray winList = new JSONArray();
+        winList.add(winners);
+
+        JSONObject obj = new JSONObject();
+
+        obj.put("counter", idCounter);
+        obj.put("winners", winList);
+        System.out.println(obj);
+        try (FileWriter file = new FileWriter("src/Assets/dataTLOU.json")) {
+            file.write(obj.toJSONString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    public static int randomInt(int min, int max) {
+        return (int) (Math.random() * ((max - min) + 1)) + min;
+    }
+
+    public static boolean isCheckWin() {
+        return checkWin;
+    }
+
+    public static void setCheckWin(boolean checkWin) {
+        ManagerGOT.checkWin = checkWin;
+    }
+
+    public static int getNewWinner() {
+        return newWinner;
+    }
+
+    public static void setNewWinner(int newWinner) {
+        ManagerGOT.newWinner = newWinner;
+    }
 }

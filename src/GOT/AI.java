@@ -34,7 +34,7 @@ public class AI extends Thread {
     public static QueueTLOU firstQueueTLOU;
     public static QueueTLOU secondQueueTLOU;
     public static QueueTLOU thirdQueueTLOU;
-    public static QueueTLOU strengthQueueTLOU;
+    public static QueueTLOU backupQueueTLOU;
     public static int prevQueueTLOU;
 
     //Sobre el AI como tal
@@ -53,7 +53,15 @@ public class AI extends Thread {
         this.firstQueueTLOU = managerTLOU.firstQueue;
         this.secondQueueTLOU = managerTLOU.secondQueue;
         this.thirdQueueTLOU = managerTLOU.thirdQueue;
-        this.strengthQueueTLOU = managerTLOU.backupQueue;
+        this.backupQueueTLOU = managerTLOU.backupQueue;
+
+        this.managerGOT.ProduceEpisode();
+        this.managerGOT.ProduceEpisode();
+        //this.managerGOT.ProduceEpisode();
+
+        this.managerTLOU.ProduceEpisode();
+        this.managerTLOU.ProduceEpisode();
+        //this.managerTLOU.ProduceEpisode();
 
     }
 
@@ -99,7 +107,9 @@ public class AI extends Thread {
         } else {
             fighterTLOU = null; // REVISAR
         }
-        updateInterface();
+
+        //managerGOT.updateQueuesLabels();
+        //managerTLOU.updateQueuesLabels();
         printFighters();
     }
 
@@ -120,9 +130,8 @@ public class AI extends Thread {
         }
     }
 
-    public void getWinner() { // NOTA: en verdad las batallas pueden NO ser por calidad, sino capaz agregar una funcion que tome la duracion y haga unos calculos locos
+    public void getWinner() { 
         if (fighterGOT != null && fighterTLOU != null) {
-
             if (fighterGOT.getQuality() == fighterTLOU.getQuality()) {
                 int giveAdvantage = randomInt(0, 100);
                 if (giveAdvantage > 50) {
@@ -133,11 +142,24 @@ public class AI extends Thread {
             }
             whoWon = fighterGOT.getQuality() > fighterTLOU.getQuality() ? 1 : 0;
             if (whoWon == 1) {
-                Interfaces.main.winner.setText("GOT");
+                main.winner.setText("GOT");
+                ManagerGOT.setNewWinner(fighterGOT.getId());
+                ManagerGOT.setCheckWin(true);
+                ManagerGOT.writeJson();
             } else if (whoWon == 0) {
                 main.winner.setText("The Last Of Us");
+                ManagerTLOU.setNewWinner(fighterTLOU.getId());
+                ManagerTLOU.setCheckWin(true);
+                ManagerTLOU.writeJson();
             }
-            updateInterface();
+            fighterGOT = null;
+            fighterTLOU = null;
+            ManagerGOT.setCheckWin(false);
+            ManagerTLOU.setCheckWin(false);
+            printFighters();
+            //managerTLOU.updateQueuesLabels();
+            //managerGOT.updateQueuesLabels();
+            
         }
     }
 
@@ -170,13 +192,23 @@ public class AI extends Thread {
                     break;
             }
 
-            main.winner.setText("EMPATARON miloco");
-            updateInterface();
+            main.winner.setText("EMPATARON");
+            //managerTLOU.updateQueuesLabels();
+            //managerGOT.updateQueuesLabels();
         }
     }
 
     public void reinforceEpisodes() {
         main.winner.setText("A reforzarse...");
+        if (fighterGOT != null) {
+            strengthQueueGOT.enqueue(fighterGOT);
+            //managerGOT.updateQueuesLabels();
+        }
+
+        if (fighterTLOU != null) {
+            backupQueueTLOU.EnqueueNode(fighterTLOU);
+            //managerTLOU.updateQueuesLabels();
+        }
 
     }
 

@@ -10,8 +10,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -28,10 +28,14 @@ public class ManagerTLOU extends Thread {
     public static QueueTLOU thirdQueue;
     public static QueueTLOU backupQueue;
     public static int idCounter;
+    private static ArrayList<Integer> winners;
+    public static boolean checkWin;
+    public static int newWinner;
     private boolean stop;
 
     public ManagerTLOU() {
-        
+        ManagerTLOU.winners = new ArrayList<>();
+        ManagerTLOU.checkWin = false;
         ManagerTLOU.firstQueue = new QueueTLOU(1);
         ManagerTLOU.secondQueue = new QueueTLOU(2);
         ManagerTLOU.thirdQueue = new QueueTLOU(3);
@@ -54,20 +58,20 @@ public class ManagerTLOU extends Thread {
     }
 
     public static void ProduceEpisode() {
-        idCounter++;
-        EpisodeTLOU episode = new EpisodeTLOU(idCounter);
-        if (episode.getDuration() <= 59) {
-            thirdQueue.EnqueueNode(episode);
-        } else if (episode.getDuration() >= 60 && episode.getDuration() <= 90) {
-            secondQueue.EnqueueNode(episode);
-        } else if (episode.getDuration() > 90) {
-            firstQueue.EnqueueNode(episode);
+        int odd = getRandom(0, 100);
+        if (odd <= 70) { // Probabilidad de 70% que se produzca un episodio
+            idCounter++;
+            EpisodeTLOU episode = new EpisodeTLOU(idCounter);
+            if (episode.getDuration() <= 59) {
+                thirdQueue.EnqueueNode(episode);
+            } else if (episode.getDuration() >= 60 && episode.getDuration() <= 90) {
+                secondQueue.EnqueueNode(episode);
+            } else if (episode.getDuration() > 90) {
+                firstQueue.EnqueueNode(episode);
+            }
+            updateQueuesLabels();
+            writeJson();
         }
-        updateCounters(firstQueue);
-        updateCounters(secondQueue);
-        updateCounters(thirdQueue);
-        updateQueuesLabels();
-        writeJson();
     }
 
     public static void updateQueuesLabels() {
@@ -122,7 +126,16 @@ public class ManagerTLOU extends Thread {
     public static void writeJson() {
         JSONObject object = new JSONObject();
         object.put("counter", idCounter);
-
+        
+        if (isCheckWin()) {
+            System.out.println("Entre en WInners GOT");            
+            winners.add(getNewWinner());
+            JSONArray winList = new JSONArray();
+            winList.add(winners);
+            
+            object.put("winners", winList);
+        }
+        
         try (FileWriter file = new FileWriter("src/Assets/dataTLOU.json")) {
             file.write(object.toJSONString());
             file.flush();
@@ -132,4 +145,42 @@ public class ManagerTLOU extends Thread {
 
     }
 
+    /*public static void writeWinnerJson(int newWinner) { //Para mandar los ganadores al JSON
+        JSONArray winList = new JSONArray();
+        winList.add(winners); //Agrega al JSONArray el array de ganadores
+        winList.add(newWinner);
+        
+        JSONObject obj = new JSONObject();
+
+        obj.put("counter", idCounter);
+        obj.put("winners", winList);
+        System.out.println(obj);
+        try (FileWriter file = new FileWriter("src/Assets/dataTLOU.json")) {
+            file.write(obj.toJSONString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    public static int getRandom(int a, int b) {
+        int c = (int) (Math.random() * (b - a + 1) + a);
+        return c;
+    }
+
+    public static boolean isCheckWin() {
+        return checkWin;
+    }
+
+    public static void setCheckWin(boolean checkWin) {
+        ManagerTLOU.checkWin = checkWin;
+    }
+
+    public static int getNewWinner() {
+        return newWinner;
+    }
+
+    public static void setNewWinner(int newWinner) {
+        ManagerTLOU.newWinner = newWinner;
+    }
 }
