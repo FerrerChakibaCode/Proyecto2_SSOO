@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GOT;
+package Classes;
 
-import Classes.TLOU.EpisodeTLOU;
-import Classes.TLOU.ManagerTLOU;
-import Classes.TLOU.QueueTLOU;
+import ClassesGOT.EpisodeGOT;
+import ClassesGOT.ManagerGOT;
+import ClassesGOT.QueueGOT;
+import ClassesTLOU.EpisodeTLOU;
+import ClassesTLOU.ManagerTLOU;
+import ClassesTLOU.QueueTLOU;
 import Interfaces.main;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -138,7 +141,7 @@ public class AI extends Thread {
 
     public void getWinner() { // NOTA: en verdad las batallas pueden NO ser por calidad, sino capaz agregar una funcion que tome la duracion y haga unos calculos locos
         if (fighterGOT != null && fighterTLOU != null) {
-
+            int idWinner;
             if (fighterGOT.getQuality() == fighterTLOU.getQuality()) {
                 int giveAdvantage = managerGOT.randomInt(0, 100);
                 if (giveAdvantage > 50) {
@@ -158,6 +161,8 @@ public class AI extends Thread {
             printFighters();
             managerTLOU.updateQueuesLabels();
             managerGOT.updateQueuesLabels();
+            
+            
         }
     }
 

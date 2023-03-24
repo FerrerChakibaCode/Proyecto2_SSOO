@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GOT;
+package ClassesGOT;
 
 import Interfaces.main;
 import java.io.FileReader;
@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -29,6 +30,7 @@ public class ManagerGOT extends Thread {
     public static QueueGOT thirdQueue;
     public static QueueGOT strengthQueue;
     public static int idCounter;
+    public static int winnerId;
     private boolean stop;
 
     public ManagerGOT() {

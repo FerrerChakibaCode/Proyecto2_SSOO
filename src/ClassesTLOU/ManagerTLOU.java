@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Classes.TLOU;
+package ClassesTLOU;
 
-import GOT.EpisodeGOT;
-import static GOT.ManagerGOT.firstQueue;
-import static GOT.ManagerGOT.secondQueue;
-import static GOT.ManagerGOT.strengthQueue;
-import static GOT.ManagerGOT.thirdQueue;
-import static GOT.ManagerGOT.updateCounter;
-import static GOT.ManagerGOT.updateQueuesLabels;
+import ClassesGOT.EpisodeGOT;
+import static ClassesGOT.ManagerGOT.firstQueue;
+import static ClassesGOT.ManagerGOT.secondQueue;
+import static ClassesGOT.ManagerGOT.strengthQueue;
+import static ClassesGOT.ManagerGOT.thirdQueue;
+import static ClassesGOT.ManagerGOT.updateCounter;
+import static ClassesGOT.ManagerGOT.updateQueuesLabels;
 import Interfaces.main;
 import java.io.FileReader;
 import java.io.FileWriter;

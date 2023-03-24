@@ -1,4 +1,4 @@
-package Classes.TLOU;
+package ClassesTLOU;
 
 /**
  *

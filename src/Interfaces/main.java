@@ -5,11 +5,11 @@
  */
 package Interfaces;
 
-import Classes.TLOU.ManagerTLOU;
-import Classes.TLOU.QueueTLOU;
-import GOT.AI;
-import GOT.ManagerGOT;
-import GOT.QueueGOT;
+import ClassesTLOU.ManagerTLOU;
+import ClassesTLOU.QueueTLOU;
+import Classes.AI;
+import ClassesGOT.ManagerGOT;
+import ClassesGOT.QueueGOT;
 
 /**
  *
