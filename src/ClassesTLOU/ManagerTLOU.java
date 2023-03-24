@@ -101,7 +101,7 @@ public class ManagerTLOU extends Thread {
                 queue.EnqueueNode(episodeAux);
             }
 
-        } else if (queue.getNumber() == 0) {
+        } else if (queue.getNumber() == 4) {
             for (int i = 0; i < queue.getSize(); i++) {
                 EpisodeTLOU episodeAux = queue.Dequeue(); // Asignamos el aux al primer elemento de la cola
                 episodeAux.setNext(null);
