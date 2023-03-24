@@ -153,11 +153,19 @@ public class AI extends Thread {
             whoWon = fighterGOT.getQuality() > fighterTLOU.getQuality() ? 1 : 0;
             if (whoWon == 1) {
                 main.winner.setText("GOT");
+                ManagerGOT.setNewWinner(fighterGOT.getId());
+                ManagerGOT.setCheckWin(true);
+                ManagerGOT.writeJson();
             } else if (whoWon == 0) {
                 main.winner.setText("The Last Of Us");
+                ManagerTLOU.setNewWinner(fighterTLOU.getId());
+                ManagerTLOU.setCheckWin(true);
+                ManagerGOT.writeJson();
             }
             fighterGOT = null;
             fighterTLOU = null;
+            ManagerGOT.setCheckWin(false);
+            ManagerTLOU.setCheckWin(false);
             printFighters();
             managerTLOU.updateQueuesLabels();
             managerGOT.updateQueuesLabels();

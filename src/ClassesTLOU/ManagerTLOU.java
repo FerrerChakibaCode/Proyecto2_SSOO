@@ -17,8 +17,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -35,10 +37,14 @@ public class ManagerTLOU extends Thread {
     public static QueueTLOU thirdQueue;
     public static QueueTLOU backupQueue;
     public static int idCounter;
+    private static ArrayList<Integer> winners;
+    public static boolean checkWin;
+    public static int newWinner;
     private boolean stop;
 
     public ManagerTLOU() {
-
+        ManagerTLOU.winners = new ArrayList<>();
+        ManagerTLOU.checkWin = false;
         ManagerTLOU.firstQueue = new QueueTLOU(1);
         ManagerTLOU.secondQueue = new QueueTLOU(2);
         ManagerTLOU.thirdQueue = new QueueTLOU(3);
@@ -63,17 +69,17 @@ public class ManagerTLOU extends Thread {
     public static void ProduceEpisode() {
         int odd = getRandom(0, 100);
         if (odd <= 70) { // Probabilidad de 70% que se produzca un episodio
-                    idCounter++;
-        EpisodeTLOU episode = new EpisodeTLOU(idCounter);
-        if (episode.getDuration() <= 59) {
-            thirdQueue.EnqueueNode(episode);
-        } else if (episode.getDuration() >= 60 && episode.getDuration() <= 90) {
-            secondQueue.EnqueueNode(episode);
-        } else if (episode.getDuration() > 90) {
-            firstQueue.EnqueueNode(episode);
-        }
-        updateQueuesLabels();
-        writeJson();
+            idCounter++;
+            EpisodeTLOU episode = new EpisodeTLOU(idCounter);
+            if (episode.getDuration() <= 59) {
+                thirdQueue.EnqueueNode(episode);
+            } else if (episode.getDuration() >= 60 && episode.getDuration() <= 90) {
+                secondQueue.EnqueueNode(episode);
+            } else if (episode.getDuration() > 90) {
+                firstQueue.EnqueueNode(episode);
+            }
+            updateQueuesLabels();
+            writeJson();
         }
 
     }
@@ -164,7 +170,14 @@ public class ManagerTLOU extends Thread {
     public static void writeJson() {
         JSONObject object = new JSONObject();
         object.put("counter", idCounter);
-
+        if (isCheckWin()) {
+            System.out.println("Entre en WInners GOT");
+            winners.add(getNewWinner());
+            JSONArray winList = new JSONArray();
+            winList.add(winners);
+            System.out.println(winners);
+            object.put("winners", winList);
+        }
         try ( FileWriter file = new FileWriter("src/Assets/dataTLOU.json")) {
             file.write(object.toJSONString());
             file.flush();
@@ -179,4 +192,19 @@ public class ManagerTLOU extends Thread {
         return c;
     }
 
+    public static boolean isCheckWin() {
+        return checkWin;
+    }
+
+    public static void setCheckWin(boolean checkWin) {
+        ManagerTLOU.checkWin = checkWin;
+    }
+
+    public static int getNewWinner() {
+        return newWinner;
+    }
+
+    public static void setNewWinner(int newWinner) {
+        ManagerTLOU.newWinner = newWinner;
+    }
 }
