@@ -156,12 +156,43 @@ public class AI extends Thread {
             fighterGOT = null;
             fighterTLOU = null;
             printFighters();
+            managerTLOU.updateQueuesLabels();
+            managerGOT.updateQueuesLabels();
         }
     }
 
     public void draw() {
-        whoWon = -1;
-        main.winner.setText("EMPATARON miloco");
+        if (fighterGOT != null && fighterTLOU != null) {
+            whoWon = -1;
+            int prevGOT = fighterGOT.getPrevQueue();
+            switch (prevGOT) {
+                case 1:
+                    firstQueueGOT.enqueue(fighterGOT);
+                    break;
+                case 2:
+                    secondQueueGOT.enqueue(fighterGOT);
+                    break;
+                case 3:
+                    thirdQueueGOT.enqueue(fighterGOT);
+                    break;
+            }
+
+            int prevTLOU = fighterTLOU.getPrevQueue();
+            switch (prevTLOU) {
+                case 1:
+                    firstQueueTLOU.EnqueueNode(fighterTLOU);
+                    break;
+                case 2:
+                    secondQueueTLOU.EnqueueNode(fighterTLOU);
+                    break;
+                case 3:
+                    thirdQueueTLOU.EnqueueNode(fighterTLOU);
+                    break;
+            }
+
+            main.winner.setText("EMPATARON miloco");
+            updateInterface();
+        }
     }
 
     public void reinforceEpisodes() {
@@ -196,4 +227,7 @@ public class AI extends Thread {
         }
     }
 
+    public int randomInt(int min, int max) {
+        return (int) (Math.random() * ((max - min) + 1)) + min;
+    }
 }
