@@ -108,8 +108,8 @@ public class main extends javax.swing.JFrame {
         queue2TLOU = new javax.swing.JTextArea();
         queue3TLOUPanel = new javax.swing.JScrollPane();
         queue3TLOU = new javax.swing.JTextArea();
-        queue4TLOUPanel = new javax.swing.JScrollPane();
-        queue4TLOU = new javax.swing.JTextArea();
+        queueBackupTLOUPanel = new javax.swing.JScrollPane();
+        queueBackupTLOU = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -260,11 +260,11 @@ public class main extends javax.swing.JFrame {
 
         getContentPane().add(queue3TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(854, 470, 270, -1));
 
-        queue4TLOU.setColumns(20);
-        queue4TLOU.setRows(5);
-        queue4TLOUPanel.setViewportView(queue4TLOU);
+        queueBackupTLOU.setColumns(20);
+        queueBackupTLOU.setRows(5);
+        queueBackupTLOUPanel.setViewportView(queueBackupTLOU);
 
-        getContentPane().add(queue4TLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 600, 270, -1));
+        getContentPane().add(queueBackupTLOUPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 600, 270, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -342,8 +342,8 @@ public class main extends javax.swing.JFrame {
     public static javax.swing.JScrollPane queue3GOTPanel;
     public static javax.swing.JTextArea queue3TLOU;
     public static javax.swing.JScrollPane queue3TLOUPanel;
-    public static javax.swing.JTextArea queue4TLOU;
-    public static javax.swing.JScrollPane queue4TLOUPanel;
+    public static javax.swing.JTextArea queueBackupTLOU;
+    public static javax.swing.JScrollPane queueBackupTLOUPanel;
     public static javax.swing.JTextArea queueStrengthGOT;
     public static javax.swing.JScrollPane queueStrengthGOTPanel;
     public static javax.swing.JLabel winner;

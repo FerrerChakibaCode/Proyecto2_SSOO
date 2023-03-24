@@ -44,9 +44,9 @@ public class ManagerGOT extends Thread {
         }
 //            try {
 //                ProduceEpisode();
-//                updateCounters(firstQueue);
-//                updateCounters(secondQueue);
-//                updateCounters(thirdQueue);
+//                updateCounter(firstQueue);
+//                updateCounter(secondQueue);
+//                updateCounter(thirdQueue);
 //
 //                Thread.sleep(10000);
 
@@ -64,41 +64,75 @@ public class ManagerGOT extends Thread {
     }
 
     public static void ProduceEpisode() {
-        idCounter++;
-        EpisodeGOT episode = new EpisodeGOT(idCounter);
-        switch (episode.getPriority()) {
-            case 1:
-                firstQueue.enqueue(episode);
-                break;
-            case 2:
-                secondQueue.enqueue(episode);
-                break;
-            case 3:
-                thirdQueue.enqueue(episode);
-                break;
+        int odd = randomInt(0, 100);
+        if (odd <= 70) { // Probabilidad de 70% que se produzca un episodio
+            idCounter++;
+            EpisodeGOT episode = new EpisodeGOT(idCounter);
+            switch (episode.getPriority()) {
+                case 1:
+                    firstQueue.enqueue(episode);
+                    break;
+                case 2:
+                    secondQueue.enqueue(episode);
+                    break;
+                case 3:
+                    thirdQueue.enqueue(episode);
+                    break;
+            }
+            updateQueuesLabels();
+            writeJson();
         }
-        updateCounters(firstQueue);
-        updateCounters(secondQueue);
-        updateCounters(thirdQueue);
-        updateQueuesLabels();
-        writeJson();
+
     }
 
     public static void updateQueuesLabels() {
         main.queue1GOT.setText(firstQueue.printQueue());
         main.queue2GOT.setText(secondQueue.printQueue());
         main.queue3GOT.setText(thirdQueue.printQueue());
+        main.queueStrengthGOT.setText(strengthQueue.printQueue());
     }
 
-    public static void updateCounters(QueueGOT queue) {
-        for (int i = 0; i < queue.getSize(); i++) {
-            EpisodeGOT episodeAux = queue.dequeue(); // Asignamos el aux al primer elemento de la cola
-            episodeAux.setNext(null);
-            if (queue.getNumber() == 1) {
+    public static void updateAllCounters() {
+        updateCounter(firstQueue);
+        updateCounter(secondQueue);
+        updateCounter(thirdQueue);
+        updateCounter(strengthQueue);
+    }
+
+    public static void updateCounter(QueueGOT queue) {
+        if (queue.getNumber() == 1) {
+            for (int i = 0; i < queue.getSize(); i++) {
+                EpisodeGOT episodeAux = queue.dequeue(); // Asignamos el aux al primer elemento de la cola
+                episodeAux.setNext(null);
                 episodeAux.setCounter(episodeAux.getCounter() + 1);
                 queue.enqueue(episodeAux);
+            }
 
-            } else {
+        } else if (queue.getNumber() == 0) {
+            for (int i = 0; i < queue.getSize(); i++) {
+                EpisodeGOT episodeAux = queue.dequeue(); // Asignamos el aux al primer elemento de la cola
+                episodeAux.setNext(null);
+                int odd = episodeAux.randomInt(0, 100);
+                if (odd <= 40) {
+                    switch (episodeAux.getPriority()) {
+                        case 1:
+                            firstQueue.enqueue(episodeAux);
+                            break;
+                        case 2:
+                            secondQueue.enqueue(episodeAux);
+                            break;
+                        case 3:
+                            thirdQueue.enqueue(episodeAux);
+                            break;
+                    }
+                } else {
+                    strengthQueue.enqueue(episodeAux);
+                }
+            }
+        } else {
+            for (int i = 0; i < queue.getSize(); i++) {
+                EpisodeGOT episodeAux = queue.dequeue(); // Asignamos el aux al primer elemento de la cola
+                episodeAux.setNext(null);
                 if (episodeAux.getCounter() >= 8) {
                     episodeAux.setCounter(0);
                     if (queue.getNumber() == 3) {
@@ -113,8 +147,9 @@ public class ManagerGOT extends Thread {
                     queue.enqueue(episodeAux);
                 }
             }
-            updateQueuesLabels();
+
         }
+        updateQueuesLabels();
     }
 
     public void readJson() {
@@ -142,6 +177,10 @@ public class ManagerGOT extends Thread {
             e.printStackTrace();
         }
 
+    }
+
+    public static int randomInt(int min, int max) {
+        return (int) (Math.random() * ((max - min) + 1)) + min;
     }
 
 }

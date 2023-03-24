@@ -16,6 +16,7 @@ public class EpisodeGOT {
     private int duration;
     private int quality;
     private int priority;
+
     private EpisodeGOT next;
 
     public EpisodeGOT(int id) {
@@ -47,11 +48,6 @@ public class EpisodeGOT {
         return priority;
     }
 
-    public int setDuration() {
-        duration = randomInt(30, 120);
-        return duration;
-    }
-
     public int getDuration() {
         return duration;
     }
@@ -59,10 +55,6 @@ public class EpisodeGOT {
     public int getId() {
         return id;
     }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
 
     public Integer getCounter() {
         return counter;

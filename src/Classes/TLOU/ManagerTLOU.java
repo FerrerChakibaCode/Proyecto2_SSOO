@@ -5,6 +5,13 @@
  */
 package Classes.TLOU;
 
+import GOT.EpisodeGOT;
+import static GOT.ManagerGOT.firstQueue;
+import static GOT.ManagerGOT.secondQueue;
+import static GOT.ManagerGOT.strengthQueue;
+import static GOT.ManagerGOT.thirdQueue;
+import static GOT.ManagerGOT.updateCounter;
+import static GOT.ManagerGOT.updateQueuesLabels;
 import Interfaces.main;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -31,7 +38,7 @@ public class ManagerTLOU extends Thread {
     private boolean stop;
 
     public ManagerTLOU() {
-        
+
         ManagerTLOU.firstQueue = new QueueTLOU(1);
         ManagerTLOU.secondQueue = new QueueTLOU(2);
         ManagerTLOU.thirdQueue = new QueueTLOU(3);
@@ -54,7 +61,9 @@ public class ManagerTLOU extends Thread {
     }
 
     public static void ProduceEpisode() {
-        idCounter++;
+        int odd = getRandom(0, 100);
+        if (odd <= 70) { // Probabilidad de 70% que se produzca un episodio
+                    idCounter++;
         EpisodeTLOU episode = new EpisodeTLOU(idCounter);
         if (episode.getDuration() <= 59) {
             thirdQueue.EnqueueNode(episode);
@@ -63,28 +72,60 @@ public class ManagerTLOU extends Thread {
         } else if (episode.getDuration() > 90) {
             firstQueue.EnqueueNode(episode);
         }
-        updateCounters(firstQueue);
-        updateCounters(secondQueue);
-        updateCounters(thirdQueue);
         updateQueuesLabels();
         writeJson();
+        }
+
     }
 
     public static void updateQueuesLabels() {
         main.queue1TLOU.setText(firstQueue.PrintQueue());
         main.queue2TLOU.setText(secondQueue.PrintQueue());
         main.queue3TLOU.setText(thirdQueue.PrintQueue());
+        main.queueBackupTLOU.setText(backupQueue.PrintQueue());
+    }
+
+    public static void updateAllCounters() {
+        updateCounters(firstQueue);
+        updateCounters(secondQueue);
+        updateCounters(thirdQueue);
+        updateCounters(backupQueue);
     }
 
     public static void updateCounters(QueueTLOU queue) {
-        for (int i = 0; i < queue.getSize(); i++) {
-            EpisodeTLOU episodeAux = queue.Dequeue(); // Asignamos el aux al primer elemento de la cola
-            episodeAux.setNext(null);
-            if (queue.getNumber() == 1) {
+        if (queue.getNumber() == 1) {
+            for (int i = 0; i < queue.getSize(); i++) {
+                EpisodeTLOU episodeAux = queue.Dequeue(); // Asignamos el aux al primer elemento de la cola
+                episodeAux.setNext(null);
                 episodeAux.setCounter(episodeAux.getCounter() + 1);
                 queue.EnqueueNode(episodeAux);
+            }
 
-            } else {
+        } else if (queue.getNumber() == 0) {
+            for (int i = 0; i < queue.getSize(); i++) {
+                EpisodeTLOU episodeAux = queue.Dequeue(); // Asignamos el aux al primer elemento de la cola
+                episodeAux.setNext(null);
+                int odd = episodeAux.getRandom(0, 100);
+                if (odd <= 40) {
+                    switch (episodeAux.getPrevQueue()) {
+                        case 1:
+                            firstQueue.EnqueueNode(episodeAux);
+                            break;
+                        case 2:
+                            secondQueue.EnqueueNode(episodeAux);
+                            break;
+                        case 3:
+                            thirdQueue.EnqueueNode(episodeAux);
+                            break;
+                    }
+                } else {
+                    backupQueue.EnqueueNode(episodeAux);
+                }
+            }
+        } else {
+            for (int i = 0; i < queue.getSize(); i++) {
+                EpisodeTLOU episodeAux = queue.Dequeue(); // Asignamos el aux al primer elemento de la cola
+                episodeAux.setNext(null);
                 if (episodeAux.getCounter() >= 8) {
                     episodeAux.setCounter(0);
                     if (queue.getNumber() == 3) {
@@ -99,15 +140,16 @@ public class ManagerTLOU extends Thread {
                     queue.EnqueueNode(episodeAux);
                 }
             }
-            updateQueuesLabels();
+
         }
+        updateQueuesLabels();
     }
 
     public static void readJson() {
 
         JSONParser parser = new JSONParser();
 
-        try (Reader reader = new FileReader("src/Assets/dataTLOU.json")) {
+        try ( Reader reader = new FileReader("src/Assets/dataTLOU.json")) {
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
             idCounter = ((Long) jsonObject.get("counter")).intValue();
         } catch (IOException e) {
@@ -121,13 +163,18 @@ public class ManagerTLOU extends Thread {
         JSONObject object = new JSONObject();
         object.put("counter", idCounter);
 
-        try (FileWriter file = new FileWriter("src/Assets/dataTLOU.json")) {
+        try ( FileWriter file = new FileWriter("src/Assets/dataTLOU.json")) {
             file.write(object.toJSONString());
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public static int getRandom(int a, int b) {
+        int c = (int) (Math.random() * (b - a + 1) + a);
+        return c;
     }
 
 }
