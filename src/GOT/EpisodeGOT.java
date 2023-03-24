@@ -35,20 +35,11 @@ public class EpisodeGOT {
         } else {
             priority = 3;
         }
-        prevQueue = priority;
         return priority;
     }
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    public int getPrevQueue() {
-        return prevQueue;
-    }
-
-    public void setPrevQueue(int prevQueue) {
-        this.prevQueue = prevQueue;
     }
 
     public int getPriority() {

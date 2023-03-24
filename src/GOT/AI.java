@@ -164,8 +164,7 @@ public class AI extends Thread {
     public void draw() {
         if (fighterGOT != null && fighterTLOU != null) {
             whoWon = -1;
-            int prevGOT = fighterGOT.getPrevQueue();
-            switch (prevGOT) {
+            switch (fighterGOT.getPriority()) {
                 case 1:
                     firstQueueGOT.enqueue(fighterGOT);
                     break;
@@ -190,8 +189,9 @@ public class AI extends Thread {
                     break;
             }
 
-            main.winner.setText("EMPATARON miloco");
-            updateInterface();
+            main.winner.setText("EMPATARON");
+            managerTLOU.updateQueuesLabels();
+            managerGOT.updateQueuesLabels();
         }
     }
 

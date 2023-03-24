@@ -12,14 +12,6 @@ public class EpisodeTLOU {
     private int quality; // Valor del 0 al 4 dependiendo de cada una de sus partes
     private int priority;
     private int prevQueue;
-
-    public int getPrevQueue() {
-        return prevQueue;
-    }
-
-    public void setPrevQueue(int prevQueue) {
-        this.prevQueue = prevQueue;
-    }
     
     /**
      *
