@@ -62,7 +62,11 @@ public class AI extends Thread {
         while (!stop) {
             try {
                 managerGOT.ProduceEpisode();
+                managerGOT.ProduceEpisode();
+                
                 managerTLOU.ProduceEpisode();
+                managerTLOU.ProduceEpisode();
+                
                 getFighters();
                 Thread.sleep(cedulas * 1000);
                 whichScenario();
@@ -78,13 +82,10 @@ public class AI extends Thread {
     public void getFighters() {
         if (!firstQueueGOT.isEmpty()) {
             fighterGOT = firstQueueGOT.dequeue();
-            prevQueueGOT = 1;
         } else if (firstQueueGOT.isEmpty() && !secondQueueGOT.isEmpty()) {
             fighterGOT = secondQueueGOT.dequeue();
-            prevQueueGOT = 2;
         } else if (secondQueueGOT.isEmpty() && !thirdQueueGOT.isEmpty()) {
             fighterGOT = thirdQueueGOT.dequeue();
-            prevQueueGOT = 3;
         } else {
             fighterGOT = null; // REVISAR
         }
@@ -98,7 +99,7 @@ public class AI extends Thread {
         } else {
             fighterTLOU = null; // REVISAR
         }
-
+        updateInterface();
         printFighters();
     }
 
@@ -136,12 +137,42 @@ public class AI extends Thread {
             } else if (whoWon == 0) {
                 main.winner.setText("The Last Of Us");
             }
+            updateInterface();
         }
     }
 
     public void draw() {
-        whoWon = -1;
-        main.winner.setText("EMPATARON miloco");
+        if (fighterGOT != null && fighterTLOU != null) {
+            whoWon = -1;
+            int prevGOT = fighterGOT.getPrevQueue();
+            switch (prevGOT) {
+                case 1:
+                    firstQueueGOT.enqueue(fighterGOT);
+                    break;
+                case 2:
+                    secondQueueGOT.enqueue(fighterGOT);
+                    break;
+                case 3:
+                    thirdQueueGOT.enqueue(fighterGOT);
+                    break;
+            }
+
+            int prevTLOU = fighterTLOU.getPrevQueue();
+            switch (prevTLOU) {
+                case 1:
+                    firstQueueTLOU.EnqueueNode(fighterTLOU);
+                    break;
+                case 2:
+                    secondQueueTLOU.EnqueueNode(fighterTLOU);
+                    break;
+                case 3:
+                    thirdQueueTLOU.EnqueueNode(fighterTLOU);
+                    break;
+            }
+
+            main.winner.setText("EMPATARON miloco");
+            updateInterface();
+        }
     }
 
     public void reinforceEpisodes() {
@@ -167,6 +198,14 @@ public class AI extends Thread {
         }
     }
 
+    public void updateInterface() {
+        firstQueueGOT.printQueue();
+        secondQueueGOT.printQueue();
+        thirdQueueGOT.printQueue();
+        firstQueueTLOU.PrintQueue();
+        secondQueueTLOU.PrintQueue();
+        thirdQueueTLOU.PrintQueue();
+    }
     public int randomInt(int min, int max) {
         return (int) (Math.random() * ((max - min) + 1)) + min;
     }

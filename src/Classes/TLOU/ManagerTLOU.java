@@ -89,9 +89,11 @@ public class ManagerTLOU extends Thread {
                     episodeAux.setCounter(0);
                     if (queue.getNumber() == 3) {
                         episodeAux.setPriority(2);
+                        episodeAux.setPrevQueue(2);
                         secondQueue.EnqueueNode(episodeAux); // Sube la prioridad del elemento
                     } else if (queue.getNumber() == 2) {
                         episodeAux.setPriority(1);
+                        episodeAux.setPrevQueue(1);
                         firstQueue.EnqueueNode(episodeAux); // Sube la prioridad del elemento
                     }
                 } else {

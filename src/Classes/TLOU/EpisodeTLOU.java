@@ -11,6 +11,7 @@ public class EpisodeTLOU {
     private int duration;
     private int quality; // Valor del 0 al 4 dependiendo de cada una de sus partes
     private int priority;
+    private int prevQueue;
     
     /**
      *
@@ -36,11 +37,20 @@ public class EpisodeTLOU {
         } else {
             priority = 3;
         }
+        prevQueue = priority;
         return priority;
     }
     
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public int getPrevQueue() {
+        return prevQueue;
+    }
+
+    public void setPrevQueue(int prevQueue) {
+        this.prevQueue = prevQueue;
     }
 
     public int getDuration() {
